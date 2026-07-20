@@ -29,6 +29,44 @@
     <meta name="author" content="LexRAH Advocates & Solicitors">
     <title>LexRAH</title>
 
+    <style>
+        /* --- Leadership grid fix: forces Name/Title/Bio rows to match height across both cards --- */
+        .leadership-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            column-gap: 30px;
+            row-gap: 0;
+            width: 100%;
+        }
+
+        .leadership-grid .card-image-wrap {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .leadership-grid h2.card-name {
+            text-align: center;
+            margin-top: 16px;
+            margin-bottom: 4px;
+        }
+
+        .leadership-grid p.card-title {
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .leadership-grid p.card-bio {
+            text-align: center;
+        }
+
+        @media (max-width: 767px) {
+            .leadership-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
 </head>
 
 <body id="home">
@@ -83,127 +121,118 @@
                         confidentiality.</p>
                 </div>
             </div>
+
             <div class="row">
                 <div class="col-xs-12">
                     <h3 class="intro">Leadership</h3>
                 </div>
 
-                <div class="col-sm-6 text-center fade-slide-up">
-                    <!-- Image Wrapper with orange border -->
-                    <div style="
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
+                <div class="col-xs-12">
+                    <div class="leadership-grid">
+
+                        <!-- Row 1: images -->
+                        <div class="card-image-wrap" style="
   width: 350px;
   height: 250px;
+  margin: 0 auto;
   background-image: url('assets/images/image.png');
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
 ">
-                        <img src="assets/images/Aditya_Walia-removebg-preview.png" alt="Aditya Walia"
-                            style="width: 140px; height: 140px; object-fit: contain; border-radius: 8px;">
-                    </div>
+                            <img src="assets/images/Aditya_Walia-removebg-preview.png" alt="Aditya Walia"
+                                style="width: 140px; height: 140px; object-fit: contain; border-radius: 8px;">
+                        </div>
 
-
-
-
-                    <h2 style="margin-top: 16px;">Aditya Walia</h2>
-                    <p><strong>Partner, Co-founder</strong><br>
-                        <!-- Former Government Pleader, Union of India, Delhi High Court<br> -->
-                        B.A. LL.B. (Hons.), Dr. Ram Manohar Lohiya National Law University
-                    </p>
-                    <p>Aditya Walia has over 13 years of experience in handling matters before the High Courts, NCLT,
-                        and arbitral forums. His work includes matters related to constitutional law, commercial
-                        litigation, corporate advisory, and the Negotiable Instruments Act, 1881, among others.
-                    </p>
-                </div>
-
-
-
-
-                <div class="col-sm-6 text-center">
-                    <!-- Image Wrapper -->
-                    <div style="
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
+                        <div class="card-image-wrap" style="
   width: 350px;
   height: 250px;
+  margin: 0 auto;
   background-image: url('assets/images/image.png');
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
 ">
-                        <div style="
+                            <div style="
   width: 113px;
   height: 140px;
   border-radius: 10px;
   overflow: hidden;
-   display: flex;
+  display: flex;
   justify-content: center;
   align-items: center;
-  
- 
 ">
-                            <img src="assets/images/Geet_Wadhwa_cropped-removebg-preview.png" alt="Geet Wadhwa"
-                                style="width: 100%; height: 100%; object-fit: contain; ">
+                                <img src="assets/images/Geet_Wadhwa_cropped-removebg-preview.png" alt="Geet Wadhwa"
+                                    style="width: 100%; height: 100%; object-fit: contain;">
+                            </div>
                         </div>
 
+                        <!-- Row 2: names -->
+                        <h2 class="card-name">Aditya Walia</h2>
+                        <h2 class="card-name">Geet Wadhwa</h2>
+
+                        <!-- Row 3: titles/degrees -->
+                        <p class="card-title">
+                            <strong>Partner, Co-founder</strong><br>
+                            <!-- Former Government Pleader, Union of India, Delhi High Court<br> -->
+                            B.A. LL.B. (Hons.), Dr. Ram Manohar Lohiya National Law University
+                        </p>
+                        <p class="card-title">
+                            <strong>Partner, Co-founder</strong><br>
+                            B.Com, LL.B., CS - Executive
+                        </p>
+
+                        <!-- Row 4: bios -->
+                        <p class="card-bio">
+                            Aditya Walia has over 13 years of experience in handling matters before the High Courts,
+                            NCLT, and arbitral forums. His work includes matters related to constitutional law,
+                            commercial litigation, corporate advisory, and the Negotiable Instruments Act, 1881, among
+                            others.
+                        </p>
+                        <p class="card-bio">
+                            With a robust foundation in both law and accountancy, Geet Wadhwa brings over a decade of
+                            specialized experience in taxation litigation, advisory, and regulatory compliance. A former
+                            member of Ernst & Young's tax practice, she has advised and represented leading Indian and
+                            multinational corporations across a range of direct and indirect tax matters.
+                        </p>
+
                     </div>
-
-
-                    <!-- Name -->
-                    <h2 style="margin-top: 16px;">Geet Wadhwa</h2>
-
-                    <!-- Title and Degree -->
-                    <p>
-                        <strong>Partner, Co-founder</strong><br>
-                        B.Com, LL.B., CS - Executive
-                    </p>
-
-                    <!-- Bio -->
-                    <p>
-                        With a robust foundation in both law and accountancy, Geet Wadhwa brings over a decade of
-                        specialized experience in taxation litigation, advisory, and regulatory compliance. A former
-                        member of Ernst & Young’s tax practice, she has advised and represented leading Indian and
-                        multinational corporations across a range of direct and indirect tax matters.
-                    </p>
                 </div>
+            </div>
 
-               <div class="col-sm-6 text-center">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h3 class="intro">Advisory Board</h3>
+                </div>
+                <div class="col-sm-6 col-sm-offset-3 text-center">
                     <!-- Image Wrapper -->
                     <div style="
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  width: 500px;
-  height: 500px;
+  width: 400px;
+  height: 350px;
   background-image: url('assets/images/image.png');
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
 ">
                         <div style="
-  width: 200px;
-  height: 250px;
-  border-radius: 10px;
+  width: 180px;
+  height: 220px;
+  border-radius: 5px;
   overflow: hidden;
-   display: flex;
+  display: flex;
   justify-content: center;
   align-items: center;
-  
- 
 ">
                             <img src="assets/images/Samir.png" alt="Samir"
-                                style="width: 100%; height: 100%; object-fit: contain; ">
+                                style="width: 100%; height: 100%; object-fit: contain;">
                         </div>
-
                     </div>
 
-
                     <!-- Name -->
-                    <h2 style="margin-top: 16px;">Samir</h2>
+                    <h2 style="margin-top: 1px;">Samir Toshio Takaochi</h2>
 
                     <!-- Title and Degree -->
                     <p>
@@ -212,11 +241,20 @@
 
                     <!-- Bio -->
                     <p>
-                        Samir serves as Advisor to the LexRAH Indo-Japan Desk, supporting the firm's efforts to strengthen legal and commercial engagement between India and Japan. He provides strategic guidance on cross-border collaborations, market entry, business development, and stakeholder engagement, helping clients navigate opportunities across both jurisdictions. With a strong understanding of international business practices and cultural dynamics, he facilitates meaningful connections between Indian and Japanese enterprises. Working closely with the LexRAH team, Samir contributes to delivering practical, business-oriented legal and advisory solutions, fostering trusted partnerships and enabling clients to pursue cross-border transactions and long-term growth with confidence.
+                        Samir serves as Advisor to the LexRAH Indo-Japan Desk, supporting the firm's efforts to
+                        strengthen legal and commercial engagement between India and Japan. He provides strategic
+                        guidance on cross-border collaborations, market entry, business development, and stakeholder
+                        engagement, helping clients navigate opportunities across both jurisdictions. With a strong
+                        understanding of international business practices and cultural dynamics, he facilitates
+                        meaningful connections between Indian and Japanese enterprises. Working closely with the
+                        LexRAH team, Samir contributes to delivering practical, business-oriented legal and advisory
+                        solutions, fostering trusted partnerships and enabling clients to pursue cross-border
+                        transactions and long-term growth with confidence.
                     </p>
                 </div>
-
             </div>
+
+        </div>
     </section>
 
 
@@ -438,7 +476,7 @@
             <h3>Disclaimer</h3>
             <p>
                 As per the rules of the Bar Council of India, Law Firms are not permitted for advertisement and
-                solicitation. By clicking the button “I Agree”, the user accepts and accesses this website and seeks
+                solicitation. By clicking the button "I Agree", the user accepts and accesses this website and seeks
                 information of his own accord and no form of solicitation has taken place by the Firm or its members.
             </p>
             <p>
