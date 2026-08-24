@@ -109,12 +109,16 @@
             header {
                 position: relative;
                 z-index: 20;
+                padding-bottom: 70px; /* reserve space for the banner */
             }
 
             .news-banner {
                 padding: 0;
-                position: relative;
-                margin-top: 12px;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                margin-top: 0;
             }
 
             .news-inner {
@@ -126,16 +130,20 @@
                 align-items: center;
                 gap: 12px;
                 box-sizing: border-box;
-                background: linear-gradient(90deg, rgba(255,255,255,0.95), #fbfdff);
-                border-top: 1px solid #e9eef2;
-                border-bottom: 1px solid #e9eef2;
-                box-shadow: 0 2px 8px rgba(14, 30, 37, 0.03);
+                background: rgba(255,255,255,0.04);
+                border-radius: 10px;
+                border: 1px solid rgba(255,255,255,0.06);
+                box-shadow: 0 6px 30px rgba(0,0,0,0.55);
+                backdrop-filter: blur(6px);
+                -webkit-backdrop-filter: blur(6px);
                 max-height: 56px;
                 overflow: hidden;
                 z-index: 5;
             }
 
             @media (max-width: 767px) {
+                header { padding-bottom: 110px; }
+
                 .news-inner {
                     max-width: 100%;
                     padding: 8px 12px;
@@ -143,6 +151,8 @@
                     grid-template-columns: 1fr;
                     row-gap: 8px;
                 }
+
+                .news-inner { border-radius: 8px; }
 
                 .news-label {
                     justify-self: start;
@@ -167,8 +177,9 @@
 
             .news-label {
                 font-weight: 700;
-                color: #e1412a;
+                color: #ff8a50;
                 min-width: 60px;
+                text-shadow: 0 1px 0 rgba(0,0,0,0.25);
             }
 
             .news-viewport {
@@ -185,7 +196,7 @@
             }
 
             .news-track a {
-                color: #0f1720;
+                color: rgba(255,255,255,0.95);
                 text-decoration: none;
                 font-weight: 600;
                 letter-spacing: -0.2px;
@@ -204,13 +215,14 @@
             }
 
             .news-toggle {
-                background: #fff;
-                border: 1px solid #d6dbe0;
+                background: rgba(255,255,255,0.06);
+                border: 1px solid rgba(255,255,255,0.12);
                 padding: 8px 10px;
-                border-radius: 6px;
+                border-radius: 8px;
                 cursor: pointer;
                 font-size: 14px;
-                box-shadow: 0 1px 2px rgba(14,30,37,0.03);
+                color: #ffffff;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.45);
             }
 
             .news-toggle:active { transform: translateY(1px); }
@@ -263,7 +275,6 @@
                 </div>
             </div>
         </div>
-    </header>
 
     <!-- News / Articles banner (bulletin) -->
     <div class="news-banner">
@@ -272,7 +283,7 @@
 
             <div class="news-viewport" id="newsViewport" tabindex="0" aria-label="Latest news and articles">
                 <div class="news-track" id="newsTrack">
-                    <a href="articles/article1.html">Latest: Understanding Corporate Compliance Updates</a>
+                    <a href="https://www.google.com" target="_blank">Latest: Understanding Corporate Compliance Updates</a>
                     <a href="articles/article2.html">Analysis: Recent High Court Judgments and Impact</a>
                     <a href="articles/article3.html">Guide: Arbitration — Practical Steps for Claimants</a>
                     <a href="articles/article4.html">Insight: Tax Litigation Trends 2026</a>
@@ -288,6 +299,7 @@
             </div>
         </div>
     </div>
+    </header>
 
     <section id="about">
         <div class="container">
