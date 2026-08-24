@@ -105,6 +105,86 @@
                 order: 8;
             }
         }
+
+            .news-banner {
+                background: linear-gradient(90deg, rgba(255,255,255,0.95), #fbfdff);
+                border-top: 1px solid #e9eef2;
+                border-bottom: 1px solid #e9eef2;
+                padding: 12px 0;
+                position: relative;
+                box-shadow: 0 2px 8px rgba(14, 30, 37, 0.03);
+            }
+
+            .news-inner {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0 15px;
+                display: flex;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: 12px;
+            }
+
+            .news-label {
+                font-weight: 700;
+                color: #e1412a;
+                min-width: 60px;
+            }
+
+            .news-viewport {
+                overflow: hidden;
+                flex: 1 1 auto;
+            }
+
+            .news-track {
+                display: inline-flex;
+                gap: 36px;
+                white-space: nowrap;
+                align-items: center;
+                padding: 6px 0;
+            }
+
+            .news-track a {
+                color: #0f1720;
+                text-decoration: none;
+                font-weight: 600;
+                letter-spacing: -0.2px;
+            }
+
+            .news-track a:hover {
+                text-decoration: underline;
+            }
+
+            .news-controls {
+                flex: 1 1 100%;
+                display: flex;
+                justify-content: flex-end;
+                gap: 8px;
+                align-items: center;
+                margin-left: 0;
+                margin-top: 8px;
+            }
+
+            .news-toggle {
+                background: #fff;
+                border: 1px solid #d6dbe0;
+                padding: 8px 10px;
+                border-radius: 6px;
+                cursor: pointer;
+                font-size: 14px;
+                box-shadow: 0 1px 2px rgba(14,30,37,0.03);
+            }
+
+            .news-toggle:active { transform: translateY(1px); }
+
+            .news-viewport::-webkit-scrollbar { display:none; }
+            .news-viewport { -ms-overflow-style: none; scrollbar-width: none; }
+
+            @media (max-width: 560px) {
+                .news-label { display: none; }
+                .news-controls { gap: 6px; justify-content: center; }
+                .news-toggle { padding: 6px 8px; font-size: 13px; }
+            }
     </style>
 
 </head>
@@ -146,6 +226,30 @@
             </div>
         </div>
     </header>
+
+    <!-- News / Articles banner (bulletin) -->
+    <div class="news-banner">
+        <div class="news-inner">
+            <div class="news-label">News & Articles</div>
+
+            <div class="news-viewport" id="newsViewport" tabindex="0" aria-label="Latest news and articles">
+                <div class="news-track" id="newsTrack">
+                    <a href="articles/article1.html">Latest: Understanding Corporate Compliance Updates</a>
+                    <a href="articles/article2.html">Analysis: Recent High Court Judgments and Impact</a>
+                    <a href="articles/article3.html">Guide: Arbitration — Practical Steps for Claimants</a>
+                    <a href="articles/article4.html">Insight: Tax Litigation Trends 2026</a>
+                    <a href="articles/article5.html">Note: Pan-India Litigation Coordination Best Practices</a>
+                </div>
+            </div>
+
+            <div class="news-controls">
+                <button id="newsPrev" class="news-toggle" aria-label="Previous">◀</button>
+                <button id="newsToggle" class="news-toggle" aria-pressed="false">Stop</button>
+                <button id="newsNext" class="news-toggle" aria-label="Next">▶</button>
+                <button id="newsDir" class="news-toggle" title="Toggle direction" data-dir="left">⇄</button>
+            </div>
+        </div>
+    </div>
 
     <section id="about">
         <div class="container">
@@ -603,6 +707,116 @@
                 document.getElementById('disclaimerModal').style.display = 'none';
             }
         };
+    </script>
+
+    <script>
+        (function () {
+            const viewport = document.getElementById('newsViewport');
+            const track = document.getElementById('newsTrack');
+            const toggle = document.getElementById('newsToggle');
+            const prev = document.getElementById('newsPrev');
+            const next = document.getElementById('newsNext');
+            const dirBtn = document.getElementById('newsDir');
+
+            if (!viewport || !track) return;
+
+            // ensure seamless loop by duplicating if needed
+            function ensureLoop() {
+                const items = Array.from(track.children);
+                if (items.length > 0 && track.scrollWidth < viewport.clientWidth * 2) {
+                    items.forEach(i => track.appendChild(i.cloneNode(true)));
+                }
+            }
+
+            ensureLoop();
+
+            let running = true;
+            let direction = 1; // 1 => move left (content scrolls left), -1 => right
+            let speed = 0.5; // px per frame
+            let rafId = null;
+
+            function step() {
+                if (!running) return;
+                viewport.scrollLeft += speed * direction;
+
+                // wrap when reaching halfway (because content duplicated)
+                const half = track.scrollWidth / 2;
+                if (viewport.scrollLeft >= half) viewport.scrollLeft -= half;
+                if (viewport.scrollLeft <= 0) viewport.scrollLeft += half;
+
+                rafId = requestAnimationFrame(step);
+            }
+
+            function start() {
+                if (running) return;
+                running = true;
+                toggle.textContent = 'Stop';
+                toggle.setAttribute('aria-pressed', 'false');
+                localStorage.removeItem('newsPaused');
+                if (!rafId) rafId = requestAnimationFrame(step);
+            }
+
+            function stop() {
+                running = false;
+                toggle.textContent = 'Play';
+                toggle.setAttribute('aria-pressed', 'true');
+                localStorage.setItem('newsPaused', 'true');
+                if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+            }
+
+            toggle.addEventListener('click', function () {
+                if (running) stop(); else start();
+            });
+
+            // Prev / Next: manual small scroll then resume if not paused
+            function manualScroll(delta) {
+                const resume = !localStorage.getItem('newsPaused');
+                stop();
+                viewport.scrollBy({ left: delta, behavior: 'smooth' });
+                if (resume) {
+                    setTimeout(() => start(), 700);
+                }
+            }
+
+            prev.addEventListener('click', () => manualScroll(-Math.max(200, viewport.clientWidth / 3)));
+            next.addEventListener('click', () => manualScroll(Math.max(200, viewport.clientWidth / 3)));
+
+            dirBtn.addEventListener('click', () => {
+                direction = -direction;
+                dirBtn.dataset.dir = direction === 1 ? 'left' : 'right';
+            });
+
+            // Hover/focus behavior: pause while hovering unless explicitly paused
+            viewport.addEventListener('mouseenter', () => {
+                if (!localStorage.getItem('newsPaused')) {
+                    stop();
+                    viewport.dataset._tempPaused = 'true';
+                }
+            });
+            viewport.addEventListener('mouseleave', () => {
+                if (viewport.dataset._tempPaused) {
+                    start();
+                    delete viewport.dataset._tempPaused;
+                }
+            });
+            viewport.addEventListener('focusin', () => viewport.dispatchEvent(new Event('mouseenter')));
+            viewport.addEventListener('focusout', () => viewport.dispatchEvent(new Event('mouseleave')));
+
+            // Restore stored state
+            if (localStorage.getItem('newsPaused') === 'true') {
+                stop();
+            } else {
+                // start auto scroll
+                if (!rafId) rafId = requestAnimationFrame(step);
+            }
+
+            // Accessibility: allow keyboard arrows when focused
+            viewport.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft') { e.preventDefault(); prev.click(); }
+                if (e.key === 'ArrowRight') { e.preventDefault(); next.click(); }
+                if (e.key === ' ' || e.key === 'Spacebar') { e.preventDefault(); toggle.click(); }
+            });
+        })();
     </script>
 
 
